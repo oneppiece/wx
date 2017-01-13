@@ -1,0 +1,101 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="assets/Bootstrap-3.3.6/css/bootstrap.css"/>
+    <link rel="stylesheet" href="assets/css/login.css"/>
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="assets/Bootstrap-3.3.6/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/angular.js"></script>
+    <script type="text/javascript" src="assets/js/angular-route.js"></script>
+    <script type="text/javascript" src="assets/js/rounter.js"></script>
+</head>
+
+<body ng-app="rount">
+<div class="container">
+    <div class="login-form" ng-controller="loginController">
+        <h1>Angular222!</h1>
+        <form novalidate name="loginForm" class="form-horizontal  login"
+              role="form" ng-controller="loginController">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">User1:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="userName1"
+                           ensure-unique ng-model="user.userName1" required>
+                </div>
+                <div class="col-sm-5">
+						<span style="color: red"
+                              ng-show="loginForm.userName1.$error.unique">验证没通过!</span> <span
+                        style="color: green;" ng-show="loginForm.userName1.$valid">验证通过!</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="userName" class="col-sm-2 control-label">用户名</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="username"
+                           name="username" ng-model="user.username" required> </span>
+                </div>
+                <div class="col-sm-5">
+						<span style="color: red"
+                              ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
+							<span ng-show="loginForm.username.$error.required">用户名是必须的。</span>
+						</span> <span style="color: green;" ng-show="loginForm.username.$valid">验证通过!</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="password"
+                           name="password" ng-model="user.password" required> </span>
+                </div>
+                <div class="col-sm-5">
+						<span style="color: red"
+                              ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
+							<span ng-show="loginForm.password.$error.required">密码是必须的。</span>
+						</span> <span style="color: green;" ng-show="loginForm.password.$valid">验证通过!</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">数字验证</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="number" name="number"
+                           ng-pattern="/[a-zA-Z]/" ng-model="user.number" required>
+                </div>
+                <div class="col-sm-5">
+						<span style="color: red"
+                              ng-show="loginForm.number.$dirty && loginForm.number.$invalid">
+							<span ng-show="loginForm.number.$error.required">用户名是必须的。</span>
+							<span ng-show="loginForm.number.$invalid">验证没通过!</span>
+						</span> <span style="color: green;" ng-show="loginForm.number.$valid">验证通过!</span>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">身份</label>
+                <div class="col-sm-5">
+                    <select class="form-control" ng-model="user.selectedRoless"
+                            ng-options="x.roleName for x in user.roles">
+                    </select>
+                </div>
+                <div class="col-sm-5">
+                    <span>选择的是:{{user.selectedRoless}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-5">
+                    <label><input type="checkbox" id="remeberMe"
+                                  ng-model="user.rememberMe">记住我</label>
+                    <button class="btn btn-default" ng-click="reset()">重置</button>
+                    <button class="btn btn-default" ng-click="submit()"
+                            ng-disabled="loginForm.userName.$invalid||loginForm.password.$invalid">登录
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>

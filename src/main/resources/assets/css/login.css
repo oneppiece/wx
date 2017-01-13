@@ -1,0 +1,8 @@
+.login {
+    width: 50%;
+    margin: 40px auto 10px auto;
+}
+
+.login-form {
+    z-index: 5;
+}

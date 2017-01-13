@@ -1,0 +1,31 @@
+{
+  "button": [
+    {
+      "key": "LEVEL_2_GOOD",
+      "type": "click",
+      "name": "今日歌曲"
+    },
+    {
+      "name": "菜单",
+      "sub_button": [
+        {
+          "url": "http://www.soso.com/",
+          "type": null,
+          "name": "搜索"
+        },
+        {
+          "url": "http://v.qq.com/",
+          "type": null,
+          "name": "视频"
+        },
+        {
+          "key": null,
+          "type": null,
+          "name": "赞一下我们"
+        }
+      ]
+    }
+  ]
+}
+------------------------------------------------------
+
