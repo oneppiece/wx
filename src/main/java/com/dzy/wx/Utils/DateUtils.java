@@ -16,4 +16,15 @@ public class DateUtils {
         System.out.println(date);
         System.out.println(addDate(date));
     }
+
+    /**
+     * 获取精确到秒的时间戳
+     *
+     * @return
+     */
+    public static String getSecondTimestamp() {
+        String timestamp = String.valueOf(new Date().getTime());
+        int length = timestamp.length();
+        return String.valueOf(timestamp.substring(0, length - 3));
+    }
 }

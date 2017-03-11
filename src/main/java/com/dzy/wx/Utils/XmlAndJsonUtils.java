@@ -2,10 +2,13 @@ package com.dzy.wx.Utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import net.sf.json.JSON;
 import net.sf.json.xml.XMLSerializer;
 import org.apache.commons.collections.map.HashedMap;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -27,4 +30,16 @@ public class XmlAndJsonUtils {
         return jsonInMap;
     }
 
+    public static HashMap string2Map(String str) {
+        XmlMapper mapper = new XmlMapper();
+        HashMap readValue = null;
+        try {
+            readValue = mapper.readValue(str, HashMap.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(readValue.toString());
+        return readValue;
+
+    }
 }

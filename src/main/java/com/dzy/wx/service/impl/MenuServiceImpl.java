@@ -1,5 +1,6 @@
 package com.dzy.wx.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dzy.wx.Utils.HttpUtils;
 import com.dzy.wx.entity.StaticParam;
 import com.dzy.wx.entity.menu.Button;
@@ -10,7 +11,6 @@ import com.dzy.wx.service.AccessTokenService;
 import com.dzy.wx.service.MenuService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,9 +57,9 @@ public class MenuServiceImpl implements MenuService {
         viewButton.setType("view");
         viewButton.setUrl("http://www.soso.com/");
         ViewButton viewButton2 = new ViewButton();
-        viewButton2.setName("视频");
+        viewButton2.setName("测试支付");
         viewButton2.setType("view");
-        viewButton2.setUrl("http://v.qq.com/");
+        viewButton2.setUrl("http://www.on1piece.com/wx/pay/payIndex");
         ClickButton clickButton1 = new ClickButton();
         clickButton1.setName("赞一下我们");
         clickButton1.setKey("LEVEL_2_GOOD");

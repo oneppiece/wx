@@ -1,5 +1,6 @@
 package com.dzy;
 
+import com.dzy.wx.entity.StaticParam;
 import com.dzy.wx.entity.media.Media;
 import com.dzy.wx.entity.media.MediaPage;
 import com.dzy.wx.enums.MediaType;
@@ -11,8 +12,8 @@ import com.dzy.wx.service.WxServerMessageService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
+// @RunWith(SpringRunner.class)
+// @SpringBootTest
 public class DemoApplicationTests {
 
     // @Autowired
@@ -25,10 +26,17 @@ public class DemoApplicationTests {
     private MediaService mediaService;
     //  @Autowired
     private UserRepository userRepository;
+    // @Autowired
+    private StaticParam staticParam;
 
     // @Test
     public void contextLoads() {
         System.out.println(accessTokenService.getAccessToken());
+    }
+
+    //  @Test
+    public void testStaticParams() {
+        System.out.println(staticParam.getUrlOauthGetUserInfo());
     }
 
     // @Test

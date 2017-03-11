@@ -20,10 +20,16 @@ public class OauthController {
     private Oauth2Service oauth2Service;
 
     @RequestMapping(value = "/home")
-    public void home(@RequestParam(name = "code", required = true) String code, @RequestParam(name = "state", required = true) String state,HttpServletRequest request) {
-        OauthAccessToken accessToken = oauth2Service.getAccessToken(code);
+    public String home(@RequestParam(name = "code", required = true) String code, @RequestParam(name = "state", required = true) String state, HttpServletRequest request) {
+        System.out.println("code:::::"+code);
+        OauthAccessToken accessToken = new OauthAccessToken();
+        synchronized (accessToken) {
+            accessToken = oauth2Service.getAccessToken(code);
+        }
         User userInfoByAccessToken = oauth2Service.getUserInfoByAccessToken(accessToken);
-        request.getSession().setAttribute("user",userInfoByAccessToken);
-        System.out.println(userInfoByAccessToken);
+        request.getSession().setAttribute("user", userInfoByAccessToken);
+        return "forward:/pay/payIndex";
     }
+
+
 }

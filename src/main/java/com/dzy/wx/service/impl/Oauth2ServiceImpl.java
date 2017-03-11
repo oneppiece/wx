@@ -1,5 +1,7 @@
 package com.dzy.wx.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.dzy.wx.Utils.DateUtils;
 import com.dzy.wx.Utils.HttpUtils;
 import com.dzy.wx.entity.OauthAccessToken;
@@ -8,8 +10,6 @@ import com.dzy.wx.entity.User;
 import com.dzy.wx.repository.OauthAccessTokenRepository;
 import com.dzy.wx.repository.UserRepository;
 import com.dzy.wx.service.Oauth2Service;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -32,6 +32,7 @@ public class Oauth2ServiceImpl implements Oauth2Service {
     @Autowired
     private UserRepository userRepository;
 
+
     @Override
     @Transactional
     public OauthAccessToken getAccessToken(String code) {
@@ -46,7 +47,7 @@ public class Oauth2ServiceImpl implements Oauth2Service {
                 .replace("CODE", code);
         JSONObject jsonObject = HttpUtils.httpRequest(url, HttpMethod.GET.toString(), null);
         String accessToken = jsonObject.getString("access_token");
-        Integer expiresIn = jsonObject.getInt("expires_in");
+        Integer expiresIn = jsonObject.getIntValue("expires_in");
         String refreshToken = jsonObject.getString("refresh_token");
         String openid = jsonObject.getString("openid");
         String scope = jsonObject.getString("scope");
@@ -64,20 +65,29 @@ public class Oauth2ServiceImpl implements Oauth2Service {
 
     @Override
     public User getUserInfoByAccessToken(OauthAccessToken accessToken) {
-        String token = accessToken.getAccessToken();
-        String openId = accessToken.getOpenId();
-        String url = staticParam.getUrlOauthGetUserInfo().replace("ACCESS_TOKEN", token).replace("OPENID", openId);
+        String token;
+        String openId;
+        String getInfoUrl;
+        synchronized (this) {
+            token = accessToken.getAccessToken();
+            openId = accessToken.getOpenId();
+            getInfoUrl = staticParam.getUrlOauthGetUserInfo();
+            System.out.println("getInfoUrl:::" + getInfoUrl);
+            System.out.println("token:::" + token);
+            System.out.println("openId:::" + openId);
+        }
+        String url = getInfoUrl.replace("ACCESS_TOKEN", token).replace("OPENID", openId);
         JSONObject jsonObject = HttpUtils.httpRequest(url, HttpMethod.GET.toString(), null);
         String openid = jsonObject.getString("openid");
         String nickName = jsonObject.getString("nickname");
-        Boolean sex = jsonObject.getString("sex").equalsIgnoreCase("1") ? Boolean.TRUE : Boolean.FALSE;
+        Boolean sex = jsonObject.getIntValue("sex") == 1 ? Boolean.TRUE : Boolean.FALSE;
         String province = jsonObject.getString("province");
         String city = jsonObject.getString("city");
         String country = jsonObject.getString("country");
         String headImgUrl = jsonObject.getString("headimgurl");
         JSONArray privilege = jsonObject.getJSONArray("privilege");
-        String unionId = jsonObject.get("unionid") == null ? "未绑定微信开放平台" : jsonObject.getString("unionid");
-        jsonObject.forEach((k, v) -> System.out.println(k + ":" + v));
+        String unionId = jsonObject.get("unionid") == null ? "ppp?" : jsonObject.getString("unionid");
+        // jsonObject.forEach((k, v) -> System.out.println(k + ":" + v));
         User user = new User(openid, nickName, sex, province, city, country, new Date(), headImgUrl, privilege.toString(), unionId);
         return (userRepository.findOneByOpenId(openid) == null) ? userRepository.save(user) : user;
     }
@@ -106,6 +116,6 @@ public class Oauth2ServiceImpl implements Oauth2Service {
     private boolean checkIsValid(OauthAccessToken token) {
         String urlOauthCheckToken = staticParam.getUrlOauthCheckToken().replace("ACCESS_TOKEN", token.getAccessToken()).replace("OPENID", token.getOpenId());
         JSONObject jsonObject = HttpUtils.httpRequest(urlOauthCheckToken, HttpMethod.GET.toString(), null);
-        return jsonObject.getInt("errcode") == 0;
+        return jsonObject.getIntValue("errcode") == 0;
     }
 }

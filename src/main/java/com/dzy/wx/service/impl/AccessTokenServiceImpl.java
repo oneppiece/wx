@@ -1,12 +1,12 @@
 package com.dzy.wx.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dzy.wx.Utils.DateUtils;
 import com.dzy.wx.Utils.HttpUtils;
 import com.dzy.wx.entity.AccessToken;
 import com.dzy.wx.entity.StaticParam;
 import com.dzy.wx.repository.AccessTokenRepository;
 import com.dzy.wx.service.AccessTokenService;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
             String url = staticParam.getUrlAccessToken().replace("APPID", staticParam.getAppId()).replace("APPSECRET", staticParam.getSecret());
             JSONObject result = HttpUtils.httpRequest(url, RequestMethod.GET.toString(), null);
             accessToken.setAccessToken(result.getString("access_token"));
-            accessToken.setExpiresIn(result.getInt("expires_in"));
+            accessToken.setExpiresIn(result.getIntValue("expires_in"));
             accessToken.setReceivedTime(new Date());
             accessToken.setUnderTime(DateUtils.addDate(new Date()));
             accessTokenRepository.save(accessToken);

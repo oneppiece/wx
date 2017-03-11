@@ -46,6 +46,18 @@ public class StaticParam {
     private String urlMediaGetCurrenthttps;
     private String urlOauthGetToken;
     private String urlOauthGetUserInfo;
+    private String preOrderUrl;
+    private static String mchId;
+    private String notifyUrl;
+    private String apiKey;
+
+    public static void setMchId(String mchId) {
+        StaticParam.mchId = mchId;
+    }
+
+    public static String getMchId() {
+        return mchId;
+    }
 
     public String getUrlOauthCheckToken() {
         return urlOauthCheckToken;
@@ -135,5 +147,32 @@ public class StaticParam {
 
     public void setUrlOauthGetToken(String urlOauthGetToken) {
         this.urlOauthGetToken = urlOauthGetToken;
+    }
+
+    public void setPreOrderUrl(String preOrderUrl) {
+        this.preOrderUrl = preOrderUrl;
+    }
+
+    public String getPreOrderUrl() {
+        return preOrderUrl;
+
+    }
+
+    public void setNotifyUrl(String notifyUrl) {
+        this.notifyUrl = notifyUrl;
+    }
+
+    public String getNotifyUrl() {
+
+        return notifyUrl;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
+    public String getApiKey() {
+
+        return apiKey;
     }
 }

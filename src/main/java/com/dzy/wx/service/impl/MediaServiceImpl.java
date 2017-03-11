@@ -1,5 +1,7 @@
 package com.dzy.wx.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.dzy.wx.Utils.HttpUtils;
 import com.dzy.wx.entity.StaticParam;
 import com.dzy.wx.entity.media.*;
@@ -8,8 +10,6 @@ import com.dzy.wx.service.AccessTokenService;
 import com.dzy.wx.service.MediaService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -51,8 +51,8 @@ public class MediaServiceImpl implements MediaService {
         }
         JSONObject jsonObject = HttpUtils.httpRequest(url, HttpMethod.POST.toString(), query);
         JSONArray item = jsonObject.getJSONArray("item");
-        int totalCount = jsonObject.getInt("total_count");
-        int itemCount = jsonObject.getInt("item_count");
+        int totalCount = jsonObject.getIntValue("total_count");
+        int itemCount = jsonObject.getIntValue("item_count");
         Set<MediaItem> mediaItems = buildMediaItem(item);
         Media media = new Media(totalCount, itemCount, mediaItems);
         return media == null ? null : mediaRepository.save(media);
@@ -76,7 +76,7 @@ public class MediaServiceImpl implements MediaService {
                     NewsMediaItemContont newsMediaItemContont = new NewsMediaItemContont();
                     newsMediaItemContont.setThumbMediaId(newsItem.getJSONObject(j).getString("thumb_media_id"));
                     newsMediaItemContont.setTitle(newsItem.getJSONObject(j).getString("title"));
-                    newsMediaItemContont.setShowCoverPic(newsItem.getJSONObject(j).getInt("show_cover_pic") == 0 ? Boolean.FALSE : Boolean.TRUE);
+                    newsMediaItemContont.setShowCoverPic(newsItem.getJSONObject(j).getIntValue("show_cover_pic") == 0 ? Boolean.FALSE : Boolean.TRUE);
                     newsMediaItemContont.setAuthor(newsItem.getJSONObject(j).getString("author"));
                     newsMediaItemContont.setDigest(newsItem.getJSONObject(j).getString("digest"));
                     newsMediaItemContont.setContent(newsItem.getJSONObject(j).getString("content"));
