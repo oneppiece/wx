@@ -25,7 +25,7 @@ dist/
 nbdist/
 .nb-gradle/
 .svn/
-src/main/resources/assets/images/
-src/main/resources/properties/
-src/main/resources/templates/
-src/main/webapp/
+#src/main/resources/assets/images/
+#src/main/resources/properties/
+#src/main/resources/templates/
+#src/main/webapp/
