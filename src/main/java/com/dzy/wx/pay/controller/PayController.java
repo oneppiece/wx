@@ -1,15 +1,15 @@
 package com.dzy.wx.pay.controller;
 
-import com.dzy.wx.Utils.DateUtils;
-import com.dzy.wx.Utils.HttpUtils;
-import com.dzy.wx.entity.StaticParam;
-import com.dzy.wx.entity.User;
+import com.dzy.wx.global.StaticParam;
 import com.dzy.wx.pay.entity.PayRequest;
 import com.dzy.wx.pay.entity.PayResponse;
 import com.dzy.wx.pay.service.PayService;
 import com.dzy.wx.pay.utils.LocalIPUtil;
 import com.dzy.wx.pay.utils.OrderUtils;
 import com.dzy.wx.pay.utils.SignUtils;
+import com.dzy.wx.user.entity.User;
+import com.dzy.wx.utils.DateUtils;
+import com.dzy.wx.utils.HttpUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,10 @@
 package com.dzy.wx.pay.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dzy.wx.Utils.HttpUtils;
-import com.dzy.wx.entity.StaticParam;
+import com.dzy.wx.global.StaticParam;
 import com.dzy.wx.pay.entity.PayRequest;
 import com.dzy.wx.pay.service.PayService;
+import com.dzy.wx.utils.HttpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;

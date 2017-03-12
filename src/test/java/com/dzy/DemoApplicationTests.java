@@ -1,22 +1,40 @@
 package com.dzy;
 
-import com.dzy.wx.entity.StaticParam;
-import com.dzy.wx.entity.media.Media;
-import com.dzy.wx.entity.media.MediaPage;
-import com.dzy.wx.enums.MediaType;
-import com.dzy.wx.repository.UserRepository;
-import com.dzy.wx.service.AccessTokenService;
-import com.dzy.wx.service.MediaService;
-import com.dzy.wx.service.MenuService;
-import com.dzy.wx.service.WxServerMessageService;
+import com.dzy.wx.global.StaticParam;
+import com.dzy.wx.global.service.AccessTokenService;
+import com.dzy.wx.global.service.WxServerMessageService;
+import com.dzy.wx.media.entity.Media;
+import com.dzy.wx.media.entity.MediaPage;
+import com.dzy.wx.media.enums.MediaType;
+import com.dzy.wx.media.service.MediaService;
+import com.dzy.wx.menu.service.MenuService;
+import com.dzy.wx.message.entity.resp.RespFactory;
+import com.dzy.wx.message.service.MessageService;
+import com.dzy.wx.user.repository.UserRepository;
+import com.dzy.wx.utils.XmlAndJsonUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
 
-// @RunWith(SpringRunner.class)
-// @SpringBootTest
+import java.util.Map;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class DemoApplicationTests {
+    @Autowired
+    WebApplicationContext webApplicationContext;
+    @Autowired
+    private RespFactory respFactory;
+    MockMvc mockMvc;
 
-    // @Autowired
+
+    //@Autowired
     private AccessTokenService accessTokenService;
     // @Autowired
     private WxServerMessageService wxServerMessageService;
@@ -46,6 +64,37 @@ public class DemoApplicationTests {
 
     //@Test
     public void menuService() {
+    }
+
+    //@Test
+//    public void respFactory() {
+//        mockMvc= MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+//        String url = "/enter";
+//        String keyWordMessage = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1348831860</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[this is a test]]></Content><MsgId>1234567890123456</MsgId></xml>";
+//        try {
+//            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(url).content(keyWordMessage).accept(org.springframework.http.MediaType.TEXT_XML)).andReturn();
+//            int status = mvcResult.getResponse().getStatus();
+//            Exception resolvedException = mvcResult.getResolvedException();
+//            System.out.println(resolvedException.getMessage());
+//            String contentAsString = mvcResult.getResponse().getContentAsString();
+//            Assert.assertEquals("正確的應該是200", 200, status);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    @Autowired
+    MessageService messageService;
+
+    @Test
+    public void respFactory() {
+        String keyWordMessage = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>1348831860</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[卡农]]></Content><MsgId>1234567890123456</MsgId></xml>";
+        String muneClickEventMessage = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[FromUser]]></FromUserName><CreateTime>123456789</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[CLICK]]></Event><EventKey><![CDATA[Level_1_TODAY_MUSIC]]></EventKey></xml>";
+        String locationEventMessage = "<xml><ToUserName><![CDATA[toUser]]></ToUserName><FromUserName><![CDATA[fromUser]]></FromUserName><CreateTime>123456789</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[LOCATION]]></Event><Latitude>23.137466</Latitude><Longitude>113.352425</Longitude><Precision>119.385040</Precision></xml>";
+
+
+        Map<String, Object> hashMap = XmlAndJsonUtils.XML2HashMap(locationEventMessage);
+        messageService.process(hashMap);
     }
 
     //@Test
